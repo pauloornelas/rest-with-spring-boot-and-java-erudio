@@ -17,7 +17,6 @@ import br.com.erudio.mapper.custom.PersonMapper;
 import br.com.erudio.model.Person;
 import br.com.erudio.repositories.PersonRepository;
 import br.com.erudio.vo.v1.PersonVO;
-import br.com.erudio.vo.v2.PersonVOV2;
 
 @Service
 public class PersonServices {
@@ -90,14 +89,5 @@ public class PersonServices {
 		var entity = repository.findById(key).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
 
 		repository.delete(entity);
-	}
-
-	public PersonVOV2 createV2(PersonVOV2 person) {
-		logger.info("Creating one person V2!");
-
-		var entity = personMapper.convertVoToEntity(person);
-		var vo = personMapper.convertEntityToVo(repository.save(entity));
-
-		return vo;
 	}
 }

@@ -13,5 +13,10 @@
     "name": "spring.datasource.jpa.properties.show-sql",
     "type": "java.lang.String",
     "description": "A description for 'spring.datasource.jpa.properties.show-sql'"
+  },
+  {
+    "name": "spring-doc.pathsToMatch",
+    "type": "java.lang.String",
+    "description": "A description for 'spring-doc.pathsToMatch'"
   }
 ]}
