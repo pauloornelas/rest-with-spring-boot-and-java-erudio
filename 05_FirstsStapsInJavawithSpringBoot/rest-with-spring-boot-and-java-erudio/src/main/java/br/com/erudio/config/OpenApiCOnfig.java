@@ -11,7 +11,7 @@ import io.swagger.v3.oas.models.info.License;
 public class OpenApiCOnfig {
 
 	@Bean
-	public OpenAPI customOpenAPI() {
+	OpenAPI customOpenAPI() {
 		return new OpenAPI()
 				.info(new Info()
 				.title("RESTFul API with java 19 and Spring Boot 3")
