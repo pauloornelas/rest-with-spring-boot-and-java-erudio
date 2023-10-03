@@ -19,6 +19,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class BookVO extends RepresentationModel<BookVO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public BookVO() {}
 
 	@Mapping("id")
 	@JsonProperty("id")
