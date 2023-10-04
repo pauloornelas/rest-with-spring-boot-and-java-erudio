@@ -14,8 +14,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import br.com.erudio.configs.TestConfigs;
 import br.com.erudio.integrationtests.testcontainers.AbstractIntegrationTest;
-import br.com.erudio.integrationtests.testcontainers.vo.AccountCredentialsVO;
-import br.com.erudio.integrationtests.testcontainers.vo.TokenVO;
+import br.com.erudio.integrationtests.vo.AccountCredentialsVO;
+import br.com.erudio.integrationtests.vo.TokenVO;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @TestMethodOrder(OrderAnnotation.class)

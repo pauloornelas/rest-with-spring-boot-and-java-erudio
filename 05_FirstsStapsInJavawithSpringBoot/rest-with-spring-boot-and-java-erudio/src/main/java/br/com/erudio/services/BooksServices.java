@@ -56,9 +56,9 @@ public class BooksServices {
 
 		logger.info("Creating one book!");
 
-		var entity = BookMepper.convertVoToEntity(book);
+		var entity = DozerMapper.parseObject(book, Book.class);
 		entity = booksRepository.save(entity);
-		var vo = BookMepper.convertEntityToVO(entity);
+		var vo = DozerMapper.parseObject(entity, BookVO.class);
 
 		vo.add(linkTo(methodOn(BooksController.class).findById(vo.getKey())).withSelfRel());
 		return vo;
