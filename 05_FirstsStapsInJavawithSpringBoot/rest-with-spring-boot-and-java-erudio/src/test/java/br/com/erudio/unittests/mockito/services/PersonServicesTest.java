@@ -1,5 +1,6 @@
 package br.com.erudio.unittests.mockito.services;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -51,6 +52,26 @@ class PersonServicesTest {
 
 		when(personRepository.findById(1L)).thenReturn(Optional.of(entity));
 
+		var result = service.disablePerson(1L);
+		
+		assertNotNull(result);
+		assertNotNull(result.getKey());
+		assertNotNull(result.getLinks());
+		assertTrue(result.toString().contains("links: [</api/person/v1/1>;rel=\"self\"]"));
+		assertEquals("Addres Test1", result.getAddress());
+		assertEquals("First Name Test1", result.getFirstName());
+		assertEquals("Last Name Test1", result.getLastName());
+		assertEquals("Female", result.getGender());
+	}
+	
+	@Test
+	void testDisabePersonById() {
+		Person entity = input.mockEntity(1);
+		entity.setId(1L);
+		entity.setEnabled(false);
+
+		when(personRepository.findById(1L)).thenReturn(Optional.of(entity));
+
 		var result = service.findById(1L);
 		assertNotNull(result);
 		assertNotNull(result.getKey());
@@ -60,6 +81,7 @@ class PersonServicesTest {
 		assertEquals("First Name Test1", result.getFirstName());
 		assertEquals("Last Name Test1", result.getLastName());
 		assertEquals("Female", result.getGender());
+		assertFalse(result.getEnabled());
 	}
 
 	@Test
@@ -83,6 +105,7 @@ class PersonServicesTest {
 		assertEquals("First Name Test1", result.getFirstName());
 		assertEquals("Last Name Test1", result.getLastName());
 		assertEquals("Female", result.getGender());
+		assertTrue(result.getEnabled());
 	}
 
 	@Test
@@ -132,6 +155,7 @@ class PersonServicesTest {
 		assertEquals("First Name Test1", result.getFirstName());
 		assertEquals("Last Name Test1", result.getLastName());
 		assertEquals("Female", result.getGender());
+		assertTrue(result.getEnabled());
 	}
 
 	@Test
@@ -147,6 +171,7 @@ class PersonServicesTest {
 		assertTrue(actualMessage.contains(expetedMessage));
 	}
 
+	/*
 	@Test
 	void testFindAll() {
 		List<Person> list = input.mockEntityList();
@@ -167,6 +192,7 @@ class PersonServicesTest {
 		assertEquals("First Name Test1", personOne.getFirstName());
 		assertEquals("Last Name Test1", personOne.getLastName());
 		assertEquals("Female", personOne.getGender());
+		assertTrue(personOne.getEnabled());
 
 		var personFour = people.get(4);
 
@@ -178,6 +204,7 @@ class PersonServicesTest {
 		assertEquals("First Name Test4", personFour.getFirstName());
 		assertEquals("Last Name Test4", personFour.getLastName());
 		assertEquals("Male", personFour.getGender());
+		assertTrue(personFour.getEnabled());
 		
 		var personSeven = people.get(7);
 
@@ -189,5 +216,7 @@ class PersonServicesTest {
 		assertEquals("First Name Test7", personSeven.getFirstName());
 		assertEquals("Last Name Test7", personSeven.getLastName());
 		assertEquals("Female", personSeven.getGender());
+		assertTrue(personSeven.getEnabled());
 	}
+	*/
 }

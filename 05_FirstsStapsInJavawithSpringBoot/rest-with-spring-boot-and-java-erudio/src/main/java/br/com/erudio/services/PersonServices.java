@@ -3,10 +3,14 @@ package br.com.erudio.services;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.controllers.PersonController;
@@ -17,6 +21,7 @@ import br.com.erudio.mapper.custom.PersonMapper;
 import br.com.erudio.model.Person;
 import br.com.erudio.repositories.PersonRepository;
 import br.com.erudio.vo.v1.PersonVO;
+import jakarta.transaction.Transactional;
 
 @Service
 public class PersonServices {
@@ -28,16 +33,22 @@ public class PersonServices {
 	
 	@Autowired
 	PersonMapper personMapper;
+	
+	@Autowired
+	PagedResourcesAssembler<PersonVO> assembler;
 
-	public List<PersonVO> findAll() {
+	public PagedModel<EntityModel<PersonVO>> findAll(Pageable pageable) {
 
 		logger.info("Finding all people!");
+		
+		var personPage = repository.findAll(pageable);
+		
+		var personVosPage = personPage.map(p -> DozerMapper.parseObject(p, PersonVO.class));
+		personVosPage.map(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
 
-		var persons = DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
+		Link link = linkTo(methodOn(PersonController.class).findall(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
 		
-		persons.stream().forEach(p -> p.add(linkTo(methodOn(PersonController.class).findById(p.getKey())).withSelfRel()));
-		
-		return persons;
+		return assembler.toModel(personVosPage, link);
 	}
 
 	public PersonVO findById(Long id) {
@@ -80,6 +91,20 @@ public class PersonServices {
 		var vo = DozerMapper.parseObject(repository.save(entity), PersonVO.class);
 
 		vo.add(linkTo(methodOn(PersonController.class).findById(vo.getKey())).withSelfRel());
+		return vo;
+	}
+	
+	@Transactional
+	public PersonVO disablePerson(Long id) {
+
+		logger.info("Disabling one person!");
+		
+		repository.disablePerson(id);
+
+		var entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID"));
+
+		var vo = DozerMapper.parseObject(entity, PersonVO.class);
+		vo.add(linkTo(methodOn(PersonController.class).findById(id)).withSelfRel());
 		return vo;
 	}
 

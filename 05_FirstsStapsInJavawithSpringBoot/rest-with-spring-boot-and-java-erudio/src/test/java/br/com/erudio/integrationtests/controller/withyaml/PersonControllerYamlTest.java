@@ -1,6 +1,7 @@
 package br.com.erudio.integrationtests.controller.withyaml;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -117,6 +118,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Male", persistedPerson.getGender());
 		
 		assertTrue(persistedPerson.getId() > 0);
+		assertTrue(persistedPerson.getEnabled());
 	}
 	
 	@Test
@@ -150,10 +152,47 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
 		assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
 		assertEquals("Male", persistedPerson.getGender());
+		
+		assertTrue(persistedPerson.getEnabled());
 	}
 	
 	@Test
 	@Order(4)
+	public void testDisabePersonById() throws JsonMappingException, JsonProcessingException {
+		mockPerson();
+		
+		var persistedPerson = given().spec(specification)
+				.config(RestAssuredConfig
+						.config()
+						.encoderConfig(EncoderConfig.encoderConfig()
+								.encodeContentTypeAs(TestConfigs.CONTENT_TYPE_YML, ContentType.TEXT)))
+				.contentType(TestConfigs.CONTENT_TYPE_YML)
+				.accept(TestConfigs.CONTENT_TYPE_YML)
+				.header(TestConfigs.HEADER_PARAM_ORIGIN, TestConfigs.ORIGIN_ERUDIO)
+				.pathParam("id", person.getId())
+				.when()
+				.patch("{id}")
+				.then().statusCode(200).extract().body().as(PersonVO.class, objectMapper);
+		
+		person = persistedPerson;
+		
+		assertNotNull(persistedPerson.getId());
+		assertNotNull(persistedPerson.getFirstName());
+		assertNotNull(persistedPerson.getLastName());
+		assertNotNull(persistedPerson.getAddress());
+		assertNotNull(persistedPerson.getGender());
+		
+		assertEquals("Nelson", persistedPerson.getFirstName());
+		assertEquals("Piquet Souto Maior", persistedPerson.getLastName());
+		assertEquals("Brasília - DF - Brasil", persistedPerson.getAddress());
+		assertEquals("Male", persistedPerson.getGender());
+		
+		assertTrue(persistedPerson.getId() > 0);
+		assertFalse(persistedPerson.getEnabled());
+	}
+	
+	@Test
+	@Order(5)
 	public void testFindById() throws JsonMappingException, JsonProcessingException {
 		mockPerson();
 		
@@ -184,10 +223,11 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Male", persistedPerson.getGender());
 		
 		assertTrue(persistedPerson.getId() > 0);
+		assertFalse(persistedPerson.getEnabled());
 	}
 	
 	@Test
-	@Order(5)
+	@Order(6)
 	public void testDelete() throws JsonMappingException, JsonProcessingException {
 		
 		given().spec(specification)
@@ -204,7 +244,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 	}
 	
 	@Test
-	@Order(6)
+	@Order(7)
 	public void testFindAll() throws JsonMappingException, JsonProcessingException {
 		
 		var content = given().spec(specification)
@@ -235,6 +275,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Ornelas", foundPersonOne.getLastName());
 		assertEquals("São Paulo", foundPersonOne.getAddress());
 		assertEquals("Male", foundPersonOne.getGender());
+		assertTrue(foundPersonOne.getEnabled());
 		
 		PersonVO foundPersonThree = persistedPersons.get(2);
 		
@@ -249,11 +290,12 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		assertEquals("Borges Giro", foundPersonThree.getLastName());
 		assertEquals("Guarulhos - São Paulo", foundPersonThree.getAddress());
 		assertEquals("Female", foundPersonThree.getGender());
+		assertTrue(foundPersonThree.getEnabled());
 		
 	}
 	
 	@Test
-	@Order(7)
+	@Order(8)
 	public void testFindAllWithoutToken() throws JsonMappingException, JsonProcessingException {
 		
 		RequestSpecification specificationWithoutToken = new RequestSpecBuilder()
@@ -281,6 +323,7 @@ public class PersonControllerYamlTest extends AbstractIntegrationTest {
 		person.setLastName("Piquet");
 		person.setAddress("Brasília - DF - Brasil");
 		person.setGender("Male");
+		person.setEnabled(true);
 	}
 
 }
