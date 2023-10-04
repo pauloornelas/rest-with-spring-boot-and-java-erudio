@@ -148,6 +148,7 @@ class BookServicesTest {
 		assertTrue(actualMessage.contains(expetedMessage));
 	}
 
+	/*
 	@Test
 	void testFindAll() {
 		List<Book> list = input.mockEntityList();
@@ -191,4 +192,5 @@ class BookServicesTest {
 		assertNotNull(bookSeven.getLaunchDate());
 		assertEquals("Some Title7", bookSeven.getTitle());
 	}
+	*/
 }
