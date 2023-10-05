@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -25,6 +24,7 @@ import br.com.erudio.integrationtests.testcontainers.AbstractIntegrationTest;
 import br.com.erudio.integrationtests.vo.AccountCredentialsVO;
 import br.com.erudio.integrationtests.vo.BookVO;
 import br.com.erudio.integrationtests.vo.TokenVO;
+import br.com.erudio.integrationtests.vo.pagedmodels.PagedModelBook;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
 import io.restassured.config.RestAssuredConfig;
@@ -203,7 +203,7 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
     @Test
     @Order(6)
     public void testFindAll() throws JsonMappingException, JsonProcessingException {
-        var response = given()
+        var wrapper = given()
                     .config(
                         RestAssuredConfig
                             .config()
@@ -212,38 +212,39 @@ public class BookControllerYamlTest extends AbstractIntegrationTest {
                     .spec(specification)
                 .contentType(TestConfigs.CONTENT_TYPE_YML)
 				.accept(TestConfigs.CONTENT_TYPE_YML)
+				.queryParams("page", 0 , "limit", 10, "direction", "asc")
                     .when()
                     .get()
                 .then()
                     .statusCode(200)
                         .extract()
                         .body()
-                        .as(BookVO[].class, objectMapper); 
+                        .as(PagedModelBook.class, objectMapper); 
 
 
-        List<BookVO> content = Arrays.asList(response);
+        var books = wrapper.getContent();
 
-        BookVO foundBookOne = content.get(0);
+        BookVO foundBookOne = books.get(0);
         
         assertNotNull(foundBookOne.getId());
         assertNotNull(foundBookOne.getTitle());
         assertNotNull(foundBookOne.getAuthor());
         assertNotNull(foundBookOne.getPrice());
-        assertTrue(foundBookOne.getId() > 0);
-        assertEquals("Working effectively with legacy code", foundBookOne.getTitle());
-        assertEquals("Michael C. Feathers", foundBookOne.getAuthor());
-        assertEquals(49.00, foundBookOne.getPrice());
+        assertEquals(144, foundBookOne.getId());
+        assertEquals("10 000 timmar", foundBookOne.getTitle());
+        assertEquals("Wyatan", foundBookOne.getAuthor());
+        assertEquals(26.29, foundBookOne.getPrice());
         
-        BookVO foundBookFive = content.get(4);
+        BookVO foundBookFive = books.get(4);
         
         assertNotNull(foundBookFive.getId());
         assertNotNull(foundBookFive.getTitle());
         assertNotNull(foundBookFive.getAuthor());
         assertNotNull(foundBookFive.getPrice());
-        assertTrue(foundBookFive.getId() > 0);
-        assertEquals("Code complete", foundBookFive.getTitle());
-        assertEquals("Steve McConnell", foundBookFive.getAuthor());
-        assertEquals(58.0, foundBookFive.getPrice());
+        assertEquals(349, foundBookFive.getId());
+        assertEquals("3 A.M.", foundBookFive.getTitle());
+        assertEquals("Odelinda", foundBookFive.getAuthor());
+        assertEquals(45.43, foundBookFive.getPrice());
     }
      
     private void mockBook() {
