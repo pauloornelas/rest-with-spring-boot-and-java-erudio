@@ -21,6 +21,7 @@ import br.com.erudio.mapper.custom.BookMepper;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BooksRepository;
 import br.com.erudio.vo.v1.BookVO;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 @Service
 public class BooksServices {
@@ -45,6 +46,20 @@ public class BooksServices {
 		Link link = linkTo(methodOn(BooksController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
 		
 		return assembler.toModel(bookVosPage, link);
+	}
+	
+	public PagedModel<EntityModel<BookVO>> findBookByTitle(String title, Pageable pageable) {
+
+		logger.info("Finding all Book by title!");
+		
+		var bookPage = booksRepository.findBookByTitle(title, pageable);
+		
+		var BookVosPage = bookPage.map(p -> DozerMapper.parseObject(p, BookVO.class));
+		BookVosPage.map(p -> p.add(linkTo(methodOn(BooksController.class).findById(p.getKey())).withSelfRel()));
+
+		Link link = linkTo(methodOn(BooksController.class).findAll(pageable.getPageNumber(), pageable.getPageSize(), "asc")).withSelfRel();
+		
+		return assembler.toModel(BookVosPage, link);
 	}
 
 	public BookVO findById(Long id) {
