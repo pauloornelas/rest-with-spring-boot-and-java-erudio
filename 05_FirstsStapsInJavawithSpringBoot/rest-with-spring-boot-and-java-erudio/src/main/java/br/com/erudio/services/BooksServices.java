@@ -14,13 +14,13 @@ import org.springframework.hateoas.PagedModel;
 import org.springframework.stereotype.Service;
 
 import br.com.erudio.controllers.BooksController;
+import br.com.erudio.data.vo.v1.BookVO;
 import br.com.erudio.exceptions.RequiredObjectIsNullException;
 import br.com.erudio.exceptions.ResourceNotFoundException;
 import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.mapper.custom.BookMepper;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BooksRepository;
-import br.com.erudio.vo.v1.BookVO;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Service

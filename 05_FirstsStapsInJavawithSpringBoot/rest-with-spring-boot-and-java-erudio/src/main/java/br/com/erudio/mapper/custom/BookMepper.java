@@ -2,8 +2,8 @@ package br.com.erudio.mapper.custom;
 
 import org.springframework.stereotype.Service;
 
+import br.com.erudio.data.vo.v1.BookVO;
 import br.com.erudio.model.Book;
-import br.com.erudio.vo.v1.BookVO;
 
 @Service
 public class BookMepper {

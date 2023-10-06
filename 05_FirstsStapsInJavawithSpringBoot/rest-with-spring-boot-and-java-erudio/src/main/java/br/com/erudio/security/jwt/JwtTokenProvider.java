@@ -18,8 +18,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
+import br.com.erudio.data.vo.v1.security.TokenVO;
 import br.com.erudio.exceptions.InvalidJwtAuthenticationException;
-import br.com.erudio.vo.v1.security.TokenVO;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 

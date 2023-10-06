@@ -8,10 +8,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.erudio.data.vo.v1.security.AccountCredentialsVO;
+import br.com.erudio.data.vo.v1.security.TokenVO;
 import br.com.erudio.repositories.UserRepository;
 import br.com.erudio.security.jwt.JwtTokenProvider;
-import br.com.erudio.vo.v1.security.AccountCredentialsVO;
-import br.com.erudio.vo.v1.security.TokenVO;
 
 @Service
 public class AuthServices {

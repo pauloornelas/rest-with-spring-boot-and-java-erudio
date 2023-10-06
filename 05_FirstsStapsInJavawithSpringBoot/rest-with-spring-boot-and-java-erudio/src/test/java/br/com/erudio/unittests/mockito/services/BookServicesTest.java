@@ -18,12 +18,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import br.com.erudio.data.vo.v1.BookVO;
 import br.com.erudio.exceptions.RequiredObjectIsNullException;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BooksRepository;
 import br.com.erudio.services.BooksServices;
 import br.com.erudio.unittests.mapper.mocks.MockBook;
-import br.com.erudio.vo.v1.BookVO;
 
 @TestInstance(Lifecycle.PER_CLASS)
 @ExtendWith(MockitoExtension.class)
