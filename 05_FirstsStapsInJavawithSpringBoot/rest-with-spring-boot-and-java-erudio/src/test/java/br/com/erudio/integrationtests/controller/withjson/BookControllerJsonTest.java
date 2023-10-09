@@ -234,16 +234,19 @@ public class BookControllerJsonTest extends AbstractIntegrationTest {
                     .body()
                 .asString();
         
-        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost:8888/api/book/v1/144\"}}}"));
-        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost:8888/api/book/v1/234\"}}}"));
-        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost:8888/api/book/v1/261\"}}}"));
+        var serverPort = TestConfigs.SERVER_PORT;
+        String port = serverPort == 80 ? "" : ":" + String.valueOf(serverPort);
+        
+        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost"+ port +"/api/book/v1/144\"}}}"));
+        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost"+ port +"/api/book/v1/234\"}}}"));
+        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost"+ port +"/api/book/v1/261\"}}}"));
         
         assertTrue(content.contains("\"page\":{\"size\":12,\"totalElements\":1015,\"totalPages\":85,\"number\":0}}"));
         
-        assertTrue(content.contains("\"first\":{\"href\":\"http://localhost:8888/api/book/v1?direction=asc&page=0&size=12&sort=title,asc\"}"));
-        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost:8888/api/book/v1?page=0&size=12&direction=asc\"}"));
-        assertTrue(content.contains("\"next\":{\"href\":\"http://localhost:8888/api/book/v1?direction=asc&page=1&size=12&sort=title,asc\"}"));
-        assertTrue(content.contains("\"last\":{\"href\":\"http://localhost:8888/api/book/v1?direction=asc&page=84&size=12&sort=title,asc\"}}"));
+        assertTrue(content.contains("\"first\":{\"href\":\"http://localhost"+ port +"/api/book/v1?direction=asc&page=0&size=12&sort=title,asc\"}"));
+        assertTrue(content.contains("\"self\":{\"href\":\"http://localhost"+ port +"/api/book/v1?page=0&size=12&direction=asc\"}"));
+        assertTrue(content.contains("\"next\":{\"href\":\"http://localhost"+ port +"/api/book/v1?direction=asc&page=1&size=12&sort=title,asc\"}"));
+        assertTrue(content.contains("\"last\":{\"href\":\"http://localhost"+ port +"/api/book/v1?direction=asc&page=84&size=12&sort=title,asc\"}}"));
         
     }
      

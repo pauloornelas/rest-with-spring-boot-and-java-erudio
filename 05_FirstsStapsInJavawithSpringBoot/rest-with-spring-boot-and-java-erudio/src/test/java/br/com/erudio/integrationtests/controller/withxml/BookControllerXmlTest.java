@@ -262,16 +262,19 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
 						.body()
 							.asString();
 		
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/144</href></links>"));
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/234</href></links>"));
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1/261</href></links>"));
+		var serverPort = TestConfigs.SERVER_PORT;
+        String port = serverPort == 80 ? "" : ":" + String.valueOf(serverPort);
+		
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost"+ port +"/api/book/v1/144</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost"+ port +"/api/book/v1/234</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost"+ port +"/api/book/v1/261</href></links>"));
 		
 		assertTrue(content.contains("<page><size>12</size><totalElements>1015</totalElements><totalPages>85</totalPages><number>0</number></page>"));
 		
-		assertTrue(content.contains("<links><rel>first</rel><href>http://localhost:8888/api/book/v1?direction=asc&amp;page=0&amp;size=12&amp;sort=title,asc</href></links>"));
-		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost:8888/api/book/v1?page=0&amp;size=12&amp;direction=asc</href></links>"));
-		assertTrue(content.contains("<links><rel>next</rel><href>http://localhost:8888/api/book/v1?direction=asc&amp;page=1&amp;size=12&amp;sort=title,asc</href></links>"));
-		assertTrue(content.contains("<links><rel>last</rel><href>http://localhost:8888/api/book/v1?direction=asc&amp;page=84&amp;size=12&amp;sort=title,asc</href></links>"));
+		assertTrue(content.contains("<links><rel>first</rel><href>http://localhost"+ port +"/api/book/v1?direction=asc&amp;page=0&amp;size=12&amp;sort=title,asc</href></links>"));
+		assertTrue(content.contains("<links><rel>self</rel><href>http://localhost"+ port +"/api/book/v1?page=0&amp;size=12&amp;direction=asc</href></links>"));
+		assertTrue(content.contains("<links><rel>next</rel><href>http://localhost"+ port +"/api/book/v1?direction=asc&amp;page=1&amp;size=12&amp;sort=title,asc</href></links>"));
+		assertTrue(content.contains("<links><rel>last</rel><href>http://localhost"+ port +"/api/book/v1?direction=asc&amp;page=84&amp;size=12&amp;sort=title,asc</href></links>"));
 	}
 	
     private void mockBook() {
