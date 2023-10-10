@@ -9,7 +9,7 @@ services:
       MYSQL_ROOT_PASSWORD: admin123
       MYSQL_USER: docker
       MYSQL_PASSWORD: admin123
-      MYSQL_DATABASE: rest_whith_spring_boot_erudio
+      MYSQL_DATABASE: rest_with_spring_boot_erudio
       MYSQL_ROOT_HOST: '%'
       MYSQL_TCP_PORT: 3308
     ports:
@@ -18,14 +18,14 @@ services:
       - 3308
     networks:
       - erudio-network
-  rest-whith-spring-boot-erudio:
-    image: pauloornelas/rest-whith-spring-boot-erudio
+  rest-with-spring-boot-erudio:
+    image: pauloornelas/rest-with-spring-boot-erudio
     restart: always
     build: ./rest-with-spring-boot-and-java-erudio
     working_dir: /rest-with-spring-boot-and-java-erudio
     environment: 
       TZ: America/Sao_Paulo
-      SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/rest_whith_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
+      SPRING.DATASOURCE.URL: jdbc:mysql://db:3308/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
       SPRING.DATASOURCE.USERNAME: root
       SPRING.DATASOURCE.PASSWORD: admin123
     ports:
