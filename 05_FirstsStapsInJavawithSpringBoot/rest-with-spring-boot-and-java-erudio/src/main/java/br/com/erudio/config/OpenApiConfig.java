@@ -14,7 +14,7 @@ public class OpenApiConfig {
 	OpenAPI customOpenAPI() {
 		return new OpenAPI()
 				.info(new Info()
-				.title("RESTFul API with java 19 and Spring Boot 3")
+				.title("RESTFul API with java 19 and Spring Boot 3 - Foo Bar")
 				.version("v1")
 				.description("Some descrption")
 				.termsOfService("")
