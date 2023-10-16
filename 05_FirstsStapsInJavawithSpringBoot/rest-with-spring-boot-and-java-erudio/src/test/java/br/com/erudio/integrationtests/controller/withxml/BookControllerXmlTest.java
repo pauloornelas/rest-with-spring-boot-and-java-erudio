@@ -281,6 +281,6 @@ public class BookControllerXmlTest extends AbstractIntegrationTest {
         book.setTitle("Docker Deep Dive");
         book.setAuthor("Nigel Poulton");
         book.setPrice(Double.valueOf(55.99));
-        book.setLaunchDate("05/11/2017");
+        book.setLaunchDate(new Date("05/11/2017"));
     }  
 }

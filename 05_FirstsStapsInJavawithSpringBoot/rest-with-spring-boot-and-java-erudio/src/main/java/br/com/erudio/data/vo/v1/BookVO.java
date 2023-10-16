@@ -19,8 +19,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class BookVO extends RepresentationModel<BookVO> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	public BookVO() {}
+
+	public BookVO() {
+	}
 
 	@Mapping("id")
 	@JsonProperty("id")
@@ -31,7 +32,7 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
 	private String author;
 
 	@Schema(description = "Data de Lançamento", example = "dd/MM/yyyy")
-	private String launchDate;
+	private Date launchDate;
 
 	@Schema(description = "Preço")
 	private Double price;
@@ -71,51 +72,11 @@ public class BookVO extends RepresentationModel<BookVO> implements Serializable 
 		this.title = title;
 	}
 
-	@JsonProperty("launchDate")
-	public String getLaunch_dateString() {
+	public Date getLaunchDate() {
 		return launchDate;
 	}
 
-	@JsonIgnore
-	public Date getLaunchDate() {
-		Date data = null;
-		try {
-			data = DateHelper.parseStringToPattern(launchDate, DateHelper.DATE_PATTERN_DEFAULT_API);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return data;
-	}
-
-	@JsonProperty("launchDate")
-	public void setLaunchDate(String launchDate) {
+	public void setLaunchDate(Date launchDate) {
 		this.launchDate = launchDate;
 	}
-
-	public void setLaunchDate(Date launchDate) {
-		this.launchDate = DateHelper.formatDateToPattern(launchDate, DateHelper.DATE_PATTERN_DEFAULT_API);
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(author, key, launchDate, price, title);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		BookVO other = (BookVO) obj;
-		return Objects.equals(author, other.author) && Objects.equals(key, other.key)
-				&& Objects.equals(launchDate, other.launchDate) && Objects.equals(price, other.price)
-				&& Objects.equals(title, other.title);
-	}
-
 }
