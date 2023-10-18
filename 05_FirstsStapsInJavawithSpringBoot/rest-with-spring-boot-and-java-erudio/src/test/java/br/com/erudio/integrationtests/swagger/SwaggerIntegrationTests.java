@@ -3,7 +3,6 @@ package br.com.erudio.integrationtests.swagger;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.erudio.configs.TestConfigs;

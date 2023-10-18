@@ -21,7 +21,6 @@ import br.com.erudio.mapper.DozerMapper;
 import br.com.erudio.mapper.custom.BookMepper;
 import br.com.erudio.model.Book;
 import br.com.erudio.repositories.BooksRepository;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Service
 public class BooksServices {

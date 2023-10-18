@@ -1,18 +1,14 @@
 package br.com.erudio.data.vo.v1;
 
 import java.io.Serializable;
-import java.text.ParseException;
 import java.util.Date;
-import java.util.Objects;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.github.dozermapper.core.Mapping;
 
-import br.com.erudio.util.DateHelper;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @JsonPropertyOrder({ "id", "author", "launchDate", "price", "title" })
