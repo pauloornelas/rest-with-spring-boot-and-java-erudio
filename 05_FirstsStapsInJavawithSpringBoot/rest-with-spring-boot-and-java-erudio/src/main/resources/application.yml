@@ -12,9 +12,10 @@ security:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC
+    #url: jdbc:mysql://localhost:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC #Local
     #username: root #Local
-    username: docker
+    url: jdbc:mysql://rest-with-spring-boot-and-java-erudio.cwaknfdxrpsj.us-east-2.rds.amazonaws.com:3306/rest_with_spring_boot_erudio?useTimezone=true&serverTimezone=UTC #Amazon
+    username: docker #Amazon
     password: admin123
   jpa:
     hibernate:
